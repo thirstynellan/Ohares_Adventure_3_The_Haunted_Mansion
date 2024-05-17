@@ -1,0 +1,25 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- item android:id="@+id/undo"
+        android:icon="@drawable/undo"
+        android:title="@string/action_undo"
+        app:showAsAction="ifRoom" / -->
+
+    <item
+        android:id="@+id/score"
+        android:orderInCategory="98"
+        android:title="Check Score..."
+        app:showAsAction="never" />
+
+    <!-- item android:id="@+id/uncle"
+        android:title="@string/action_uncle"
+        android:orderInCategory="99"
+        app:showAsAction="never" / -->
+
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="100"
+        android:title="About..."
+        app:showAsAction="never" />
+
+</menu>
