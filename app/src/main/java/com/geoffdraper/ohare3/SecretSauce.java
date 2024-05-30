@@ -81,6 +81,7 @@ public class SecretSauce {
         var pit2 = new Room("You're even deeper in the pit.");
         var pit3 = new Room("You're all the way in the pit. There are no exits.");
         var splendid = new Room("You're in a splendid chamber 10 meters high.");
+        splendid.setAdditionalDescription("There is a passageway heading north, but it is currently blocked by a vicious-looking goblin. Both he, and the heavy axe he is carrying, look very threatening.");
         var junction = new Room("You're at a junction of three passages.");
         var dustypassage = new Room("You're in a dusty passage.");
         var broken = new Room("You're in an old broken passage.");
@@ -97,7 +98,7 @@ public class SecretSauce {
                                 
                 "Thanks Dad, I'll take some too!" your father tells Grandpa, who hands marshmallows all around. Soon everyone is warming marshmallows around the fire pit. Once it's perfectly toasted, you carefully remove your marshmallow from the skewer.
                                 
-                "Peanut butter?" Grandpa asks you, holding out a jar out to you.
+                "Peanut butter?" Grandpa asks, holding out a jar out to you.
                                 
                 "Peanut butter on s'mores? That's just weird," your dad laughs.
                                 
@@ -120,21 +121,79 @@ public class SecretSauce {
         var intro2 = Room.lit("""
                 Your mother is the next to speak. "I have an idea. Why don't we tell scary stories around the campfire!"
                                 
-                "That sounds fun," your dad agrees. "Who wants to go first?"
+                "That sounds fun," your dad agrees. "Who should we have tell the story?"
                                 
                 What do you say?
                 """);
 
-        var intro3 = Room.lit("""
-                Your mother and father look at Grandpa expectantly.
+        var grandpasStory = "Your mother and father look at Grandpa expectantly.\n";
+        
+        var dadsStory = Room.lit("""
+                "Okay, here's one," your dad says.
                                 
+                "It was a dark and stormy night. A student was returning to her dormitory after an evening of study at the library. As she walked past the cafeteria, five black cats crossed her path. Later, as she neared the front door of the dorm, three more black cats crept past. How many cats did she see in all?"
+                                
+                "Oh, I know!" your hand shoots in the air. "Eight!"
+                                
+                "That's right," he says proudly.
+                                
+                Your mom laughs and touches your dad's knee playfully. "That wasn't a ghost story; that was a math problem!"
+                                
+                "Those are the scariest stories I know," your dad replies with a sly grin.
+                                
+                "Don't worry, Dad. I thought it was great!"
+                                
+                Your mom looks toward Grandpa John. "I'll bet you have a spooky story you could tell us."
+                """);
+
+        var momsStory = Room.lit("""
+                "Me?" your mom says, "Well, I'll try.
+                                
+                "Once upon a time there was a princess, and every day she would flutter down from her palace to visit the people of yon village."
+                                
+                "This doesn't sound spooky at all," you interrupt.
+                                
+                Your mom continues breezily. "Everyday, this princess would visit the village and bring gifts to the adoring villagers."
+                                
+                "What kinds of gifts?"
+                                
+                "Candy. Wildflowers. Shiny ribbons. Now be quiet and listen. So one day as she was delivering her gifts to the villagers, a grubby boy stomped up and shouted 'Down with the princess! Down with her lousy gifts!'
+                                
+                "The princess was heartbroken. She walked slowly back to her palace and prepared a special batch of poisoned candy. The next day she returned to the village and gave a piece to each villager. And they all died slow painful deaths, the ingrates!"
+                                
+                There is silence around the campfire for a few seconds.
+                                
+                "Wow, mom, that was... dark. Um, maybe Grandpa could tell us a story next."
+                                
+                "Yeah," your dad agrees nervously.
+                """);
+
+        var janesStory = Room.lit("""
+                "It was a dark and stormy night. A little boy was bored, so he decided to watch a movie on his favorite streaming service. But when he turned on his laptop, he discovered to his horror that the wifi was down!
+                
+                "Undaunted, he moved to his desktop computer, and tried again. Alas, the wired network connection was not working either.
+                
+                "Thinking quickly, he found a DVD and inserted it into his computer. Just as the movie started to play, there was a big clap of lightning, and the computer shut off, along with all the lights in the house.
+                
+                "Groping in the darkness, he finally managed to find his smartphone, knowing that it might still have access to the Internet. He turned it on and felt the warmth of its glowing screen. But only for a moment, for his battery was at one percent. Cradling his phone to his chest, he curled up in a fetal position as his phone died. His body racked with sobs, he eventually fell into a fitful sleep -- cold and alone, with no device for comfort."
+                                
+                Your parents look at you with concern. "That was really... intense," your dad says.
+                                
+                "So, what happened to the boy?" your mother asks.
+                                
+                "Well, the next morning, when the sun came up, he saw that he was laying next to a bookshelf. So he reached for a book and happily read for a few hours."
+                                
+                "Nice plot twist!" your mom says. "That was not the ending I expected." She turns to Grandpa. "I think it's your turn, John."
+                """);
+
+        var intro3 = Room.lit("""
                 With all eyes on him, Grandpa John blushes slightly. "Well, okay. It just so happens that I do have a spooky story.
                                 
                 "It was a long time ago. There was a full moon out, like tonight. It was the night I explored the haunted mansion. The owner, who had mysteriously died years before, was a Frenchman by the name of Monsieur Untel."
                                 
                 "That's sounds like a made-up name," you interrupt.
                                 
-                "Well, what did you expect me to do — steal characters from a Stephen King novel? Can you say 'copyright infringement?'"
+                "Well, what did you expect me to do — steal characters from a Stephen King novel?"
                                 
                 You smile and roll your eyes. "OK whatever, Grandpa."
                                 
@@ -152,7 +211,7 @@ public class SecretSauce {
                                 
                 "Yeah," Mom agrees, "I liked how you turned that troll into a frog."
                                 
-                "And how that book just transformed into gold; that was crazy," Dad pipes in.
+                "And how that book just transformed into gold; that was trippy," Dad pipes in.
                 
                 Which part did YOU like best?                                
                 """);
@@ -671,6 +730,7 @@ public class SecretSauce {
                     splendid.addExit(Direction.NORTH, junction);
                     //p.getCurrentLocation().removeFromVisibleItems(goblin);
                     MainActivity.success(p.getContext(), "You got him! The goblin disappears in a cloud of black smoke.");
+                    splendid.setAdditionalDescription("A passageway leads north.");
                     p.callForceRedisplay();
                 } else if (p.isIn(drafty) && !trollDead) {
                     MainActivity.failure(p.getContext(), "You fire the magic gun at the troll, but he only laughs at you. Try something else!");
@@ -955,7 +1015,60 @@ public class SecretSauce {
         intro2.addAction(new ItemAction() {
             @Override
             public String getName(Player p) {
+                return "\"Me! Me!\"";
+            }
+
+            @Override
+            public void thatThingYouDo(Player p) {
+                p.go(janesStory);
+                p.callForceRedisplay();
+            }
+        });
+
+        intro2.addAction(new ItemAction() {
+            @Override
+            public String getName(Player p) {
+                return "\"Why don't you tell us a story, Mom?\"";
+            }
+
+            @Override
+            public void thatThingYouDo(Player p) {
+                p.go(momsStory);
+                p.callForceRedisplay();
+            }
+        });
+
+        intro2.addAction(new ItemAction() {
+            @Override
+            public String getName(Player p) {
+                return "\"I want to hear Dad tell a story.\"";
+            }
+
+            @Override
+            public void thatThingYouDo(Player p) {
+                p.go(dadsStory);
+                p.callForceRedisplay();
+            }
+        });
+
+        intro2.addAction(new ItemAction() {
+            @Override
+            public String getName(Player p) {
                 return "\"I like Grandpa's stories.\"";
+            }
+
+            @Override
+            public void thatThingYouDo(Player p) {
+                intro3.prependDescription(grandpasStory);
+                p.go(intro3);
+                p.callForceRedisplay();
+            }
+        });
+
+        var segueToGrandpasStory = new ItemAction() {
+            @Override
+            public String getName(Player p) {
+                return "Listen to Grandpa's story.";
             }
 
             @Override
@@ -963,7 +1076,11 @@ public class SecretSauce {
                 p.go(intro3);
                 p.callForceRedisplay();
             }
-        });
+        };
+
+        dadsStory.addAction(segueToGrandpasStory);
+        momsStory.addAction(segueToGrandpasStory);
+        janesStory.addAction(segueToGrandpasStory);
 
         intro3.addAction(new ItemAction() {
             @Override
