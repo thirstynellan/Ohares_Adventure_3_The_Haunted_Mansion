@@ -88,6 +88,7 @@ public class Room {
     }
 
     public View getView(Player avatar) {
+        //trivial change to test github
         LinearLayout lnl = new LinearLayout(avatar.getContext());
         lnl.setBackgroundColor(Color.BLACK);
         lnl.setOrientation(LinearLayout.VERTICAL);
